@@ -25,8 +25,8 @@ pipeline {
            }
         stage('locate namespace') {
             steps {
-                sh('sed -i "s/default/staging/g" deployment-wp.yml')
-                }
+               sh('sed -i "s/default/staging/g" deployment-wp.yml')
+                 }          
            }
         stage('add domain') {
             steps {
