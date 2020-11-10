@@ -50,7 +50,7 @@ pipeline {
            }
          stage('show ingress') {
             steps {
-                sh('kubectl get ingress')
+                sh('kubectl get ingress -n=staging')
                 }
            }        
       }
