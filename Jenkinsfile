@@ -25,12 +25,12 @@ pipeline {
            }
         stage('locate namespace') {
             steps {
-                sh('sed -i "s/default/production/g" deployment-wp.yml')
-                }
+               sh('sed -i "s/default/staging/g" deployment-wp.yml')
+                 }          
            }
         stage('add domain') {
             steps {
-                sh('sed -i "s/blog.ridjal.com/blog.ridjal.com/g" deployment-wp.yml')
+                sh('sed -i "s/blog.ridjal.com/sblog.ridjal.com/g" deployment-wp.yml')
                 }
            }
         stage('deploy') {
