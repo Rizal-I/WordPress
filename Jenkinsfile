@@ -10,12 +10,12 @@ pipeline {
             //}
         stage('docker build') {
             steps {
-                sh "docker build --build-arg APP_NAME=$DOCKER_IMAGE_NAME -t $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME ."
+                sh "docker build --build-arg APP_NAME=$DOCKER_IMAGE_NAME -t $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$BUILD_NUMBER ."
                 }
            }
         stage('Docker push') {
             steps {                
-                sh "docker push $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME"
+                sh "docker push $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$BUILD_NUMBER"
                 }
            }
         stage('tagging') {
@@ -32,12 +32,7 @@ pipeline {
             steps {
                 sh('sed -i "s/blog.ridjal.com/blog.ridjal.com/g" deployment-wp.yml')
                 }
-           }
-        stage('deploy') {
-            steps {
-                sh('kubectl delete -f deployment-wp.yml')
-                }
-           }
+           }        
         stage('deploy') {
             steps {
                 sh('kubectl apply -f deployment-wp.yml')
@@ -45,7 +40,7 @@ pipeline {
            }
         stage('remove image docker') {
             steps {
-                sh "docker rmi $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME"
+                sh "docker rmi $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$BUILD_NUMBER"
                 }
            }
          stage('show ingress') {
