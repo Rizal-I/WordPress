@@ -25,12 +25,12 @@ pipeline {
            }
         stage('locate namespace') {
             steps {
-               sh('sed -i "s/default/production/g" deployment-wp.yml')
+               sh('sed -i "s/default/staging/g" deployment-wp.yml')
                  }          
            }
         stage('add domain') {
             steps {
-                sh('sed -i "s/blog.ridjal.com/blog.ridjal.com/g" deployment-wp.yml')
+                sh('sed -i "s/blog.ridjal.com/sblog.ridjal.com/g" deployment-wp.yml')
                 }
            }        
         stage('deploy') {
@@ -38,14 +38,14 @@ pipeline {
                 sh('kubectl apply -f deployment-wp.yml')
                 }
            }
-        stage('remove image docker') {
+        stage('remove image docker ') {
             steps {
                 sh "docker rmi $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$BUILD_NUMBER"
                 }
            }
          stage('show ingress') {
             steps {
-                sh('kubectl get ingress -n=production')
+                sh('kubectl get ingress -n=staging')
                 }
            }        
       }
