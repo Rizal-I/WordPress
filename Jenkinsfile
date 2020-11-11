@@ -38,7 +38,7 @@ pipeline {
                 sh('kubectl apply -f deployment-wp.yml')
                 }
            }
-        stage('remove image docker') {
+        stage('remove image docker ') {
             steps {
                 sh "docker rmi $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$BUILD_NUMBER"
                 }
